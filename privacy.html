@@ -31,30 +31,35 @@ footer { margin-top:40px; color:var(--muted); font-size:14px; }
 <body><main>
 <header><img class="logo" src="icon.png" alt="" width="36" height="36"><a class="brand" href="index.html">char log</a></header>
 <h1>Char Log privacy policy</h1>
-<p>What the app stores, what goes online and what you can do about it, in plain words. Last updated 12 October 2026 (circles, reports).</p>
+<p>What the app stores, what goes online and what you can do about it, in plain words. Last updated 13 October 2026 (accounts and backups).</p>
 <h2>What Char Log stores</h2>
 <p>Everything you log: workouts, sets and routines, with the notes, gym names, photos, videos and locations you add to a workout; meals, your own foods and scanned packets; water; weight and waist; your stats (weight, height, age, sex, goal) and daily targets; reminders and settings.</p>
-<p>All of it is kept in the app&#x27;s storage on your phone. You don&#x27;t need an account.</p>
+<p>All of it is kept in the app&#x27;s storage on your phone. You don&#x27;t need an account to log. If you sign in with Google, a copy backs up to your account (see below).</p>
 <h2>What goes online</h2>
-<p>Nothing you log is sent to us. We don&#x27;t run servers that hold your data, and there are no ads, no advertising ID and no analytics or tracking, ours or anyone else&#x27;s.</p>
+<p>Without an account, nothing you log is sent to us. There are no ads, no advertising ID and no analytics or tracking, ours or anyone else&#x27;s, with or without an account.</p>
 <p>These things use the internet, only when you use them:</p>
 <ul><li>Barcode lookup: the camera reads the barcode on your phone, and the picture never leaves it. Only the barcode number is sent to Open Food Facts, a free, open food database, to look the packet up. A packet you scanned before is found on the phone, without the internet. What you then log stays on your phone.</li><li>Exercise photos: opening an exercise downloads its photo from GitHub, where the free exercise library is hosted. Like any website, GitHub can see your IP address; nothing about you is sent.</li><li>Talk with AI: builds a message from your workout and stats that you can read first. It leaves your phone only if you tap to open ChatGPT, copy it or share it, and then that app&#x27;s privacy policy applies.</li><li>Workout location: only if you tap Add location. Your phone&#x27;s location service (Google&#x27;s, on most Android phones) works out where you are; Char Log saves the spot with that workout on your phone and sends it nowhere.</li></ul>
 <p>Reminders are scheduled on the phone itself, with no server involved.</p>
+<h2>Your account and backup (only if you sign in)</h2>
+<p>Signing in with Google creates your Char Log account. Our server (Supabase, in Mumbai) keeps your Google email and name, and a compressed copy of everything you log (listed above), so your logs come back when you sign in on any phone.</p>
+<p>The backup is private to your account: no other user can see it. It updates a few seconds after you log something and when you leave the app. Workout photos and videos are not in it yet; they stay on the phone.</p>
+<p>When you sign out, you choose whether this phone keeps your logs or is cleared. Your backup stays in your account until you delete it.</p>
 <h2>Circles (only if you join one)</h2>
-<p>Circles and jodi need a Google sign-in. Our server (Supabase, in Mumbai) then keeps: your Google email and first name for the account; for each day, yes or no for whether you logged anything, a workout, food and water (weight only if you turn it on), and your streak count; the circles you are in, invite codes, reactions and nudges.</p>
-<p>Your circle sees your first name, those yes/no ticks and your streak. Never what you ate or how much, weights, sets, photos, videos, notes or locations: those never leave your phone.</p>
+<p>Circles use your account. For circles our server also keeps: for each day, yes or no for whether you logged anything, a workout, food and water (weight only if you turn it on), and your streak count; the circles you are in, invite codes, reactions and nudges.</p>
+<p>Your circle sees your first name, those yes/no ticks and your streak. Never what you ate or how much, weights, sets, photos, videos, notes or locations.</p>
 <p>You can report or block anyone in your circles (the ⋯ next to their name). A report keeps who sent it, who it is about, the reason and your note, so we can review it; the person is not told who reported them. Blocking hides you from each other in every circle.</p>
-<p>Daily ticks are deleted after 35 days. To delete your circles account: Circle tab, the menu, Delete my circles account, or email us. The account and everything stored with it is deleted; your logs on this phone stay.</p>
+<p>Daily ticks are deleted after 35 days.</p>
+<p>To delete your account: Circle tab, the menu at the top right, Delete my account, or email us. Your account, your backup and everything stored with it are deleted; your logs on this phone stay unless you also use Delete everything.</p>
 <h2>Keeping it safe</h2>
 <p>Your logs live in the app&#x27;s private storage on your phone, which other apps can&#x27;t read.</p>
 <p>Everything the app sends over the internet goes over an encrypted connection (HTTPS).</p>
-<p>Without circles we keep nothing on servers. Your logs stay on your phone until you delete them in the app or uninstall the app.</p>
+<p>Our hosting provider encrypts stored data, and only your own sign-in can reach your backup. Without an account we keep nothing on servers, and your logs stay on your phone until you delete them or uninstall the app.</p>
 <h2>Phone backup</h2>
 <p>If backup is on for your phone, Android may include Char Log&#x27;s data in your own Google account backup, so it can come back on a new phone. That backup belongs to your Google account and is under your control; we can&#x27;t see it.</p>
 <p>Workout photos and videos are left out of that online backup to keep it small. They stay on this phone, and moving to a new phone by cable or Wi-Fi brings them along. Photos are saved without their hidden location data; videos are kept as your camera recorded them.</p>
 <h2>Your choices</h2>
-<ul><li>See and fix anything you logged, right in the app.</li><li>Take a copy: Settings, Your data, Export my data (a JSON file plus spreadsheet files). Restore it on a new phone from the same place. Workout photos and videos aren&#x27;t in the export yet.</li><li>Delete it: Settings, Your data, Delete everything. Uninstalling the app also removes its data from the phone.</li></ul>
-<p>Unless you use circles, we hold nothing of yours; for circles, see above. You can contact us with any question or complaint.</p>
+<ul><li>See and fix anything you logged, right in the app.</li><li>Take a copy: Settings, Your data, Export my data (a JSON file plus spreadsheet files). Restore it on a new phone from the same place. Workout photos and videos aren&#x27;t in the export yet.</li><li>Delete it: Settings, Your data, Delete everything. If you&#x27;re signed in, this deletes your account&#x27;s backup too. Uninstalling the app removes its data from the phone, not your backup.</li></ul>
+<p>Unless you sign in, we hold nothing of yours; if you do, see above. You can contact us with any question or complaint.</p>
 <h2>Age</h2>
 <p>Char Log is made for ages 13 and up. Under 18, daily targets are set for a growing body, with no calorie cut. Age is used only to set targets, and we don&#x27;t ask for proof of it.</p>
 <h2>Health</h2>
