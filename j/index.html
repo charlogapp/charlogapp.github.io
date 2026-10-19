@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Join a circle on Char Log</title>
+<link rel="icon" type="image/png" href="/icon.png">
+<style>
+:root { --bg:#0C0C0E; --surface:#16161A; --border:#2A2A31; --text:#F4F3EE; --muted:#A3A3AB;
+        --lime:#C8FF2E; --food:#F28E42; --water:#4FD8FF; --weight:#A487E8; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--text);
+       font:16px/1.55 -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+main { max-width:720px; margin:0 auto; padding:32px 16px 64px; }
+a { color:var(--lime); }
+header { display:flex; align-items:center; gap:10px; margin-bottom:28px; }
+.logo { width:36px; height:36px; border-radius:9px; }
+.brand { font-weight:800; font-size:20px; letter-spacing:-0.3px; color:var(--text); text-decoration:none; }
+h1 { font-size:34px; line-height:1.15; letter-spacing:-0.8px; margin:0 0 12px; }
+h2 { font-size:20px; margin:28px 0 8px; }
+p, li { color:#D6D6DB; }
+.muted { color:var(--muted); }
+.card { background:var(--surface); border:1px solid var(--border); border-radius:22px;
+        padding:18px 20px; margin:16px 0; box-shadow:4px 4px 0 #050506; }
+.logs { display:flex; gap:8px; margin:18px 0; }
+.logs span { height:10px; flex:1; border-radius:6px; }
+nav a { display:inline-block; margin:6px 14px 6px 0; }
+.cta { display:inline-block; background:var(--lime); color:#0C0C0E; font-weight:800; text-decoration:none;
+       padding:14px 22px; border-radius:16px; box-shadow:4px 4px 0 #050506; }
+footer { margin-top:40px; color:var(--muted); font-size:14px; }
+</style>
+</head>
+<body><main>
+<header><img class="logo" src="/icon.png" alt="" width="36" height="36"><a class="brand" href="/">char log</a></header>
+
+<h1>You're invited to a circle</h1>
+<p>Someone wants you in their circle on Char Log: a small group that logs gym and food together and
+keeps each other going. They see a tick for each day you log and your streak, never your meals or weight.</p>
+<div class="card"><p class="muted">Your invite code</p>
+<p id="code" style="font-size:30px;font-weight:800;letter-spacing:3px;margin:4px 0 0">-</p></div>
+<p><a id="get" class="cta" href="https://play.google.com/store/apps/details?id=app.charlog.char_log">Get Char Log on Google Play</a></p>
+<p class="muted">Installed it from this page? Open Char Log, sign in on the Circle tab, and the invite is waiting.
+Otherwise tap Circle, then +, then Join with a code, and type the code above.</p>
+<p><a id="open" href="#">Already have Char Log? Open it</a></p>
+<script>
+(function () {
+  var c = (new URLSearchParams(location.search).get("c") || "").toUpperCase();
+  if (!/^[A-Z0-9]{8}$/.test(c)) { c = ""; }
+  document.getElementById("code").textContent = c || "Ask for a new invite";
+  if (!c) { return; }
+  var store = "https://play.google.com/store/apps/details?id=app.charlog.char_log&referrer=" + encodeURIComponent("c=" + c);
+  document.getElementById("get").href = store;
+  document.getElementById("open").href = "intent://charlogapp.github.io/j/?c=" + c +
+    "#Intent;scheme=https;package=app.charlog.char_log;S.browser_fallback_url=" + encodeURIComponent(store) + ";end";
+})();
+</script>
+
+<footer>
+<nav><a href="/">Home</a><a href="/privacy.html">Privacy policy</a><a href="/support.html">Support</a><a href="/delete-account.html">Delete your data</a><a href="/child-safety.html">Child safety</a></nav>
+<p>Char Log is an independent app made in India. Estimates, not medical advice.</p>
+</footer>
+</main></body></html>

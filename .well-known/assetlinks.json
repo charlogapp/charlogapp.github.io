@@ -1,0 +1,16 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.charlog.char_log",
+      "sha256_cert_fingerprints": [
+        "A9:3A:A1:85:37:9B:FF:F5:8E:81:1A:D9:74:43:8C:DB:89:1D:32:DF:23:EA:46:70:E0:55:91:3C:76:62:FB:44",
+        "BD:C0:5B:8D:19:08:1B:F2:6A:C4:B1:18:98:F2:34:64:9B:33:B1:1A:16:6A:1B:CD:5F:04:08:98:17:B5:65:3D",
+        "D6:C5:58:89:86:50:92:50:7E:76:89:3F:C8:D7:01:95:BB:4A:DC:FC:01:BC:61:BC:78:54:60:02:A4:76:E2:7D"
+      ]
+    }
+  }
+]
