@@ -4,34 +4,178 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Delete your Char Log data</title>
+<meta name="theme-color" content="#f4f2e9">
 <link rel="icon" type="image/png" href="/icon.png">
 <style>
-:root { --bg:#0C0C0E; --surface:#16161A; --border:#2A2A31; --text:#F4F3EE; --muted:#A3A3AB;
-        --lime:#C8FF2E; --food:#F28E42; --water:#4FD8FF; --weight:#A487E8; }
-* { box-sizing:border-box; }
-body { margin:0; background:var(--bg); color:var(--text);
-       font:16px/1.55 -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
-main { max-width:720px; margin:0 auto; padding:32px 16px 64px; }
-a { color:var(--lime); }
-header { display:flex; align-items:center; gap:10px; margin-bottom:28px; }
-.logo { width:36px; height:36px; border-radius:9px; }
-.brand { font-weight:800; font-size:20px; letter-spacing:-0.3px; color:var(--text); text-decoration:none; }
-h1 { font-size:34px; line-height:1.15; letter-spacing:-0.8px; margin:0 0 12px; }
-h2 { font-size:20px; margin:28px 0 8px; }
-p, li { color:#D6D6DB; }
-.muted { color:var(--muted); }
-.card { background:var(--surface); border:1px solid var(--border); border-radius:22px;
-        padding:18px 20px; margin:16px 0; box-shadow:4px 4px 0 #050506; }
-.logs { display:flex; gap:8px; margin:18px 0; }
-.logs span { height:10px; flex:1; border-radius:6px; }
-nav a { display:inline-block; margin:6px 14px 6px 0; }
-.cta { display:inline-block; background:var(--lime); color:#0C0C0E; font-weight:800; text-decoration:none;
-       padding:14px 22px; border-radius:16px; box-shadow:4px 4px 0 #050506; }
-footer { margin-top:40px; color:var(--muted); font-size:14px; }
+:root {
+  color-scheme: light;
+  --paper: #f4f2e9;
+  --paper-deep: #e9e6db;
+  --ink: #172821;
+  --forest: #19382c;
+  --forest-light: #244838;
+  --muted: #59675d;
+  --rule: #c9cbbf;
+  --lime: #c8ff2e;
+  --food: #f28e42;
+  --water: #4fd8ff;
+  --weight: #a487e8;
+  --gold: #f2c14e;
+  --display: "Arial Rounded MT Bold", "Trebuchet MS", system-ui, sans-serif;
+  --body: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.55 var(--body); }
+a { color: inherit; }
+a:focus-visible, button:focus-visible { outline: 3px solid #6b8e16; outline-offset: 4px; }
+.skip-link { position: absolute; left: 16px; top: -60px; z-index: 10; padding: 10px 14px; background: var(--lime); color: var(--ink); }
+.skip-link:focus { top: 12px; }
+.site-wrap { width: min(1160px, calc(100% - 48px)); margin: 0 auto; }
+.site-header { min-width: 0; min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 28px; border-bottom: 1px solid var(--rule); }
+.brand-lockup { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font-weight: 850; font-size: 20px; letter-spacing: -.055em; white-space: nowrap; }
+.logo { width: 34px; height: 34px; border-radius: 9px; }
+.site-nav { margin-left: auto; display: flex; align-items: center; gap: clamp(14px, 3vw, 36px); }
+.site-nav a, .footer-nav a { text-decoration: none; font-size: 13px; font-weight: 650; }
+.site-nav a:hover, .footer-nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.nav-cta, .button { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 12px; padding: 0 19px; border: 1px solid var(--ink); background: var(--ink); color: var(--paper); text-decoration: none; font-weight: 750; font-size: 13px; white-space: nowrap; box-shadow: 4px 4px 0 var(--lime); transition: transform .14s ease, box-shadow .14s ease; }
+.nav-cta:hover, .button:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--lime); }
+.nav-cta { min-height: 44px; padding: 0 15px; background: transparent; color: var(--ink); box-shadow: none; }
+.nav-cta:hover { background: var(--lime); box-shadow: none; }
+.hero { min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(360px, .9fr); gap: clamp(44px, 8vw, 112px); align-items: center; padding: clamp(60px, 9vw, 124px) 0 82px; }
+.hero-text { min-width: 0; }
+.eyebrow { display: flex; align-items: center; gap: 10px; margin: 0 0 24px; color: var(--muted); font: 700 10px/1.4 var(--mono); letter-spacing: .14em; text-transform: uppercase; }
+.eyebrow::before { width: 8px; height: 8px; border-radius: 50%; background: #789c1f; content: ""; }
+h1, h2, h3, p { margin-top: 0; }
+h1 { max-width: 720px; margin-bottom: 22px; font: 800 clamp(3.25rem, 7vw, 6.1rem)/.96 var(--display); letter-spacing: -.075em; }
+h1 .accent, .section-title .accent { color: #668b20; }
+.hero-copy { max-width: 540px; margin-bottom: 26px; color: #4c5b51; font-size: clamp(16px, 1.4vw, 18px); line-height: 1.7; }
+.hero-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 18px; }
+.text-link { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 700; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.micro-note { margin: 20px 0 0; color: #68756b; font-size: 11px; }
+.preview-wrap { position: relative; padding: 14px 15px 18px 0; }
+.preview-wrap::before { position: absolute; inset: 36px -20px 0 30px; z-index: -1; background: var(--lime); content: ""; }
+.app-preview { position: relative; padding: 25px 26px 23px; background: var(--forest); color: #f5f4e9; box-shadow: 8px 8px 0 #aeb69c; }
+.preview-top, .preview-footer { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.preview-tag, .preview-date, .preview-footer, .row-label, .section-kicker, .feature-number { font: 700 9px/1.4 var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+.preview-tag { color: var(--lime); }
+.preview-date, .preview-footer { color: #b5c3b6; }
+.preview-heading { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; padding: 30px 0 20px; }
+.preview-heading p { margin: 0 0 5px; color: #b5c3b6; font-size: 12px; }
+.preview-heading strong { display: block; font: 800 48px/.92 var(--display); letter-spacing: -.08em; }
+.preview-heading strong span { color: var(--lime); }
+.safe-chip { padding: 8px 10px; border: 1px solid #587463; color: var(--lime); font: 700 8px/1 var(--mono); letter-spacing: .08em; }
+.preview-progress { display: flex; gap: 5px; margin-bottom: 17px; }
+.preview-progress i { height: 5px; flex: 1; background: #3f5b4b; }
+.preview-progress i:nth-child(1) { background: var(--food); }
+.preview-progress i:nth-child(2) { background: var(--water); }
+.preview-progress i:nth-child(3) { background: var(--lime); }
+.preview-row { min-height: 54px; display: grid; grid-template-columns: 11px minmax(0, 1fr) auto; gap: 11px; align-items: center; border-top: 1px solid #3b5546; }
+.row-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--food); }
+.preview-row.water .row-dot { background: var(--water); }
+.preview-row.workout .row-dot { background: var(--lime); }
+.preview-row.weight .row-dot { background: var(--weight); }
+.row-name { font-size: 13px; font-weight: 750; }
+.row-detail { color: #b5c3b6; font-size: 11px; }
+.row-status { color: var(--lime); font: 700 8px/1.4 var(--mono); text-transform: uppercase; }
+.preview-footer { padding-top: 17px; border-top: 1px solid #3b5546; font-size: 8px; }
+.ticker { overflow: hidden; margin: 0 calc((1160px - 100vw) / 2); background: var(--lime); color: var(--ink); }
+.ticker-track { width: max-content; display: flex; align-items: center; gap: 29px; padding: 16px max(24px, calc((100vw - 1160px) / 2)); font: 750 10px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+.ticker-track span::after { margin-left: 28px; color: #6e8b20; content: "✳"; }
+.section { padding: clamp(66px, 9vw, 118px) 0; }
+.how { display: grid; grid-template-columns: .7fr 1.3fr; gap: 54px; align-items: start; }
+.section-kicker { margin: 5px 0 0; color: #66766a; }
+.section-title { max-width: 740px; margin: 0; font: 800 clamp(2.4rem, 5.2vw, 4.65rem)/1.01 var(--display); letter-spacing: -.07em; }
+.feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 55px; }
+.feature-card { min-height: 220px; padding: 22px 21px; border: 1px solid var(--rule); background: rgba(255,255,255,.22); }
+.feature-card:nth-child(1) { background: var(--forest); color: var(--paper); border-color: var(--forest); }
+.feature-card:nth-child(2) { background: #e4d9f4; border-color: #c7b8e0; }
+.feature-card:nth-child(3) { background: var(--lime); border-color: #bddf5a; }
+.feature-number { display: block; margin-bottom: 36px; color: #53665a; }
+.feature-card:first-child .feature-number { color: #b5c3b6; }
+.feature-card h3 { max-width: 220px; margin-bottom: 10px; font: 800 22px/1.08 var(--display); letter-spacing: -.055em; }
+.feature-card p { margin: 0; color: #526157; font-size: 13px; }
+.feature-card:first-child p { color: #d0d9d0; }
+.privacy-band { position: relative; overflow: hidden; display: grid; grid-template-columns: 1.05fr .95fr; gap: 65px; align-items: center; padding: clamp(34px, 6vw, 70px); background: var(--forest); color: var(--paper); }
+.privacy-band::after { position: absolute; right: -65px; top: -125px; width: 310px; height: 310px; border: 1px solid #3a5a46; border-radius: 50%; box-shadow: 0 0 0 28px #19382c, 0 0 0 29px #3a5a46, 0 0 0 58px #19382c, 0 0 0 59px #3a5a46; content: ""; pointer-events: none; }
+.privacy-band .section-kicker { color: var(--lime); }
+.privacy-band .section-title { position: relative; z-index: 1; font-size: clamp(2.5rem, 5vw, 4.3rem); }
+.privacy-copy { position: relative; z-index: 1; max-width: 430px; margin: 0; color: #d5ded4; font-size: 15px; line-height: 1.8; }
+.privacy-copy strong { color: white; }
+.privacy-footnote { display: block; margin-top: 22px; color: #b5c3b6; font-size: 12px; }
+.final-cta { display: flex; justify-content: space-between; align-items: center; gap: 28px; padding: 65px 0; border-bottom: 1px solid var(--rule); }
+.final-cta h2 { max-width: 650px; margin: 0; font: 800 clamp(2rem, 4vw, 3.3rem)/1.05 var(--display); letter-spacing: -.06em; }
+.final-cta .button { flex: 0 0 auto; }
+.site-footer { display: flex; justify-content: space-between; gap: 28px; align-items: flex-start; padding: 28px 0 36px; color: #5b695f; font-size: 12px; }
+.site-footer p { max-width: 380px; margin: 0; }
+.footer-nav { display: flex; flex-wrap: wrap; gap: 10px 22px; }
+.footer-nav a { font-size: 11px; }
+.page-main { min-height: 65vh; padding: 72px 0 40px; }
+.page-main h1 { max-width: 900px; font-size: clamp(2.6rem, 6vw, 4.5rem); }
+.page-main h2 { margin: 34px 0 8px; font: 800 24px/1.2 var(--display); letter-spacing: -.04em; }
+.page-main p, .page-main li { color: #45564b; }
+.page-main .card { margin: 22px 0; padding: 20px 23px; border: 1px solid var(--rule); background: #eeece2; }
+.page-main .muted { color: var(--muted); }
+.page-main a:not(.button) { text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.invite-code { font-size: 30px; font-weight: 800; letter-spacing: 3px; margin: 4px 0 0; }
+@media (max-width: 850px) {
+  .hero { grid-template-columns: minmax(0,1fr) minmax(310px,.9fr); gap: 36px; }
+  .how { grid-template-columns: 1fr; gap: 18px; }
+  .privacy-band { gap: 35px; }
+}
+@media (max-width: 640px) {
+  body { overflow-x: hidden; }
+  .site-wrap { width: calc(100vw - 36px); max-width: 520px; margin-left: 18px; margin-right: 18px; }
+  .site-header { min-height: 68px; gap: 8px; }
+  .brand-lockup { font-size: 18px; }
+  .logo { width: 30px; height: 30px; }
+  .site-nav { gap: 0; }
+  .site-nav a:not(.nav-cta) { display: none; }
+  .nav-cta { min-height: 40px; padding: 0 8px; font-size: 10px; }
+  .nav-label { font-size: 0; }
+  .nav-label::after { content: "Get the app"; font-size: 10px; }
+  .hero { grid-template-columns: 1fr; gap: 40px; padding: 66px 0 60px; }
+  .hero > *, .hero-copy, .preview-wrap, .app-preview { width: 100%; max-width: 100%; min-width: 0; }
+  .hero-actions { align-items: flex-start; flex-direction: column; gap: 16px; }
+  .eyebrow { margin-bottom: 19px; font-size: 9px; }
+  h1 { max-width: 100%; overflow-wrap: anywhere; font-size: clamp(2.5rem, 11vw, 3.8rem); }
+  .hero-copy { font-size: 16px; overflow-wrap: anywhere; }
+  .preview-wrap { width: calc(100% - 9px); margin-right: 9px; }
+  .app-preview { padding: 22px 19px 19px; }
+  .preview-heading strong { font-size: 43px; }
+  .ticker { margin: 0 -18px; }
+  .ticker-track { padding: 15px 18px; }
+  .section { padding: 70px 0; }
+  .section-title { font-size: clamp(2.5rem, 10vw, 3.5rem); }
+  .feature-grid { grid-template-columns: 1fr; margin-top: 32px; }
+  .feature-card { min-height: 180px; }
+  .feature-number { margin-bottom: 24px; }
+  .privacy-band { grid-template-columns: 1fr; gap: 25px; margin: 0 -18px; padding: 38px 22px; }
+  .privacy-band::after { right: -150px; top: -160px; }
+  .privacy-band .section-title { font-size: 2.7rem; }
+  .final-cta { align-items: flex-start; flex-direction: column; padding: 48px 0; }
+  .site-footer { flex-direction: column; }
+  .footer-nav { gap: 12px 18px; }
+  .page-main { padding-top: 48px; }
+}
+@media (max-width: 360px) {
+  .site-wrap { width: calc(100% - 28px); }
+  .hero { padding-top: 54px; }
+  .hero h1 { font-size: 2.35rem; }
+  .hero-actions { align-items: flex-start; flex-direction: column; }
+  .preview-date { font-size: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+}
 </style>
 </head>
-<body><main>
-<header><img class="logo" src="/icon.png" alt="" width="36" height="36"><a class="brand" href="/">char log</a></header>
+<body><a class="skip-link" href="#main-content">Skip to content</a><div class="site-wrap">
+<header class="site-header"><a class="brand-lockup" href="/"><img class="logo" src="/icon.png" alt="" width="34" height="34">char log</a><nav class="site-nav" aria-label="Main navigation">
+<a href="/">Home</a><a href="/privacy.html">Privacy</a><a href="/support.html">Support</a></nav></header>
+<main id="main-content" class="page-main">
 
 <h1>Delete your data</h1>
 <p>Char Log keeps what you log on your phone. Without an account we don't hold a copy; if you sign in with
@@ -52,8 +196,7 @@ nudges and every daily yes/no tick are deleted from our server straight away. Yo
 Email <a href="mailto:charlogdev@gmail.com">charlogdev@gmail.com</a>.</p>
 </div>
 
-<footer>
-<nav><a href="/">Home</a><a href="/privacy.html">Privacy policy</a><a href="/support.html">Support</a><a href="/delete-account.html">Delete your data</a><a href="/child-safety.html">Child safety</a></nav>
-<p>Char Log is an independent app made in India. Estimates, not medical advice.</p>
-</footer>
-</main></body></html>
+</main>
+<footer class="site-footer"><p>Char Log is an independent app made in India. Nutrition estimates are estimates, not medical advice.</p>
+<nav class="footer-nav" aria-label="Footer"><a href="/privacy.html">Privacy policy</a><a href="/support.html">Support</a><a href="/delete-account.html">Delete your data</a><a href="/child-safety.html">Child safety</a></nav></footer>
+</div></body></html>
