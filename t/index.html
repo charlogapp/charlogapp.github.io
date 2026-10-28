@@ -156,6 +156,7 @@ h1 { max-width: 640px; margin-bottom: 26px; font: 800 clamp(2.3rem, 4.4vw, 3.5re
 .footer-nav { display: flex; flex-wrap: wrap; gap: 10px 22px; }
 .footer-nav a { font-size: 13px; }
 .page-main { min-height: 65vh; padding: 72px 0 40px; }
+.page-main.bare { padding: 36px 0 24px; max-width: 760px; }
 .page-main h1 { max-width: 900px; font-size: clamp(2.1rem, 4.6vw, 3.6rem); }
 .page-main h2 { margin: 36px 0 8px; font: 700 21px/1.25 var(--display); letter-spacing: -.02em; }
 .page-main p, .page-main li { max-width: 760px; color: #3e3e45; }
@@ -218,70 +219,129 @@ h1 { max-width: 640px; margin-bottom: 26px; font: 800 clamp(2.3rem, 4.4vw, 3.5re
 </style>
 </head>
 <body><a class="skip-link" href="#main-content">Skip to content</a><div class="site-wrap">
-<header class="site-header"><a class="brand-lockup" href="/"><img class="logo" src="/icon.png" alt="" width="34" height="34">char log</a><nav class="site-nav pages" aria-label="Main navigation">
-<a href="/">Home</a><a href="/privacy.html">Privacy</a><a href="/support.html">Support</a></nav></header>
-<main id="main-content" class="page-main">
+<header class="site-header"><a class="brand-lockup" href="/"><img class="logo" src="/icon.png" alt="" width="34" height="34">char log</a></header>
+<main id="main-content" class="page-main bare">
 
+<style>
+/* The trainer page (FEEDBACK #169): a header, a row of numbers, one section at a time. */
+.tl h1 { margin: 0 0 6px; font: 800 clamp(1.6rem, 5vw, 2.4rem)/1.1 var(--display); letter-spacing: -.03em; }
+.tl .sub { margin: 0 0 22px; color: var(--muted); font-size: 14px; }
+.tl .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin: 0 0 22px; }
+.tl .stat { padding: 14px 16px; border: 2px solid var(--ink); border-radius: 16px; background: #fbfaf6; }
+.tl .stat b { display: block; font: 800 22px/1.15 var(--display); letter-spacing: -.02em; }
+.tl .stat span { color: var(--muted); font-size: 13px; }
+.tl .tabs { display: flex; gap: 6px; overflow-x: auto; margin: 0 0 14px; padding-bottom: 2px; }
+.tl .tabs button { flex: 0 0 auto; min-height: 40px; padding: 0 13px; border: 2px solid var(--ink); border-radius: 99px; background: transparent; color: var(--ink); font: 800 13px var(--body); cursor: pointer; }
+.tl .tabs button[aria-selected="true"] { background: var(--ink); color: var(--paper); }
+.tl .list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--rule); }
+.tl .list > li { padding: 14px 2px; border-bottom: 1px solid var(--rule); }
+.tl .line { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; }
+.tl .line strong { font-size: 15px; }
+.tl .line .right { color: #3e3e45; font-size: 14px; white-space: nowrap; }
+.tl .date { color: var(--muted); font-size: 13px; }
+.tl .pr { display: inline-block; margin: 6px 6px 0 0; padding: 2px 8px; border-radius: 8px; background: var(--gold); color: var(--on-gold); font-size: 12px; font-weight: 800; }
+.tl details { margin-top: 6px; }
+.tl summary { color: var(--muted); font-size: 13px; font-weight: 700; cursor: pointer; }
+.tl details p { margin: 6px 0 0; color: #3e3e45; font-size: 14px; }
+.tl .empty { padding: 28px 0; color: var(--muted); text-align: center; }
+.tl .foot { margin-top: 36px; color: var(--muted); font-size: 13px; }
+</style>
+<div class="tl">
 <h1 id="title">Training log</h1>
-<p id="sub" class="muted">Loading…</p>
+<p id="sub" class="sub">Loading…</p>
+<div id="stats" class="stats" hidden></div>
+<div id="tabs" class="tabs" role="tablist" hidden></div>
 <div id="out"></div>
-<p class="muted" style="margin-top:28px">Shared from <strong>Char Log</strong>, a gym and Indian food log.
-Only what they chose is here, and they can stop sharing at any time.
-<a href="https://play.google.com/store/apps/details?id=app.charlog.char_log">Get it for your clients</a>.</p>
+<p class="foot">Shared from <strong>Char Log</strong>. They choose what's here and can stop sharing any time.</p>
+</div>
 <script>
 (function () {
   var token = location.hash.replace(/^#/, "");
   var out = document.getElementById("out");
   var sub = document.getElementById("sub");
   function el(tag, text, cls) { var e = document.createElement(tag); if (text != null) e.textContent = text; if (cls) e.className = cls; return e; }
-  function card(title) { var c = el("div", null, "card"); c.appendChild(el("h2", title)); out.appendChild(c); return c; }
-  function row(parent, left, right) { var r = el("p"); r.appendChild(el("strong", left)); r.appendChild(document.createTextNode("  " + right)); parent.appendChild(r); }
   function day(d) { var x = new Date(d + "T12:00:00"); return x.toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short" }); }
   function ago(iso) { if (!iso) return ""; var m = Math.round((Date.now() - new Date(iso)) / 60000); if (m < 60) return m + " min ago"; var h = Math.round(m / 60); if (h < 48) return h + " h ago"; return Math.round(h / 24) + " days ago"; }
+  function avg(xs, f) { return xs.length ? xs.reduce(function (n, x) { return n + f(x); }, 0) / xs.length : 0; }
+  function line(left, right, date) {
+    var li = el("li"), l = el("div", null, "line"), a = el("div");
+    a.appendChild(el("strong", left));
+    if (date) { a.appendChild(document.createElement("br")); a.appendChild(el("span", date, "date")); }
+    l.appendChild(a); l.appendChild(el("span", right, "right")); li.appendChild(l); return li;
+  }
+  function list(items, emptyText) {
+    if (!items.length) return el("p", emptyText, "empty");
+    var ul = el("ul", null, "list"); items.forEach(function (i) { ul.appendChild(i); }); return ul;
+  }
   if (token.length < 32) { sub.textContent = "This link isn't complete. Ask for the link again."; return; }
   fetch("https://qmzciatlszoupypzzzzz.supabase.co/functions/v1/trainer", { method: "POST", headers: { "content-type": "application/json", "apikey": "sb_publishable_p5gTr9EAtqWIhZlctrjZqw_A11ctlqs" },
                     body: JSON.stringify({ token: token }) })
     .then(function (r) { if (r.status === 404) throw new Error("gone"); return r.json(); })
     .then(function (d) {
-      document.getElementById("title").textContent = d.name + "'s training log";
+      document.getElementById("title").textContent = d.name + "'s log";
       sub.textContent = "Last " + d.weeks + " weeks" + (d.updatedAt ? " · updated " + ago(d.updatedAt) : "");
-      if (d.empty) { out.appendChild(el("p", "Nothing to show yet. It appears after their next workout or meal.", "muted")); return; }
-      if (d.workouts) {
-        var c = card("Workouts (" + d.workouts.length + ")");
-        if (!d.workouts.length) c.appendChild(el("p", "No workouts in this period.", "muted"));
-        d.workouts.slice().reverse().forEach(function (w) {
-          row(c, day(w.date) + " · " + w.name, w.minutes + " min · " + w.sets + " sets · " + Math.round(w.volumeKg) + " kg");
-          (w.prs || []).forEach(function (p) { c.appendChild(el("p", "PR: " + p, "muted")); });
-          (w.exercises || []).forEach(function (x) { c.appendChild(el("p", x.name + ": " + x.sets.join(", "), "muted")); });
-        });
+      if (d.empty) { out.appendChild(el("p", "Nothing logged yet.", "empty")); return; }
+      // The numbers a trainer checks first.
+      var stats = [];
+      if (d.workouts) stats.push([String(d.workouts.length), "workouts"]);
+      if (d.food && d.food.length) stats.push([Math.round(avg(d.food, function (x) { return x.protein; })) + " g", "protein a day"]);
+      if (d.weight && d.weight.length) {
+        var first = d.weight[0].kg, last = d.weight[d.weight.length - 1].kg, ch = Math.round((last - first) * 10) / 10;
+        stats.push([last + " kg", d.weight.length > 1 ? (ch > 0 ? "+" : "") + ch + " kg in this period" : "latest weight"]);
       }
-      if (d.food) {
-        var f = card("Food per day");
-        if (!d.food.length) f.appendChild(el("p", "No food logged in this period.", "muted"));
-        d.food.slice().reverse().forEach(function (x) { row(f, day(x.date), Math.round(x.protein) + " g protein · ~" + Math.round(x.kcal) + " kcal"); });
+      if (d.water && d.water.length) stats.push([(avg(d.water, function (x) { return x.ml; }) / 1000).toFixed(1) + " L", "water a day"]);
+      var st = document.getElementById("stats");
+      stats.forEach(function (s) { var c = el("div", null, "stat"); c.appendChild(el("b", s[0])); c.appendChild(el("span", s[1])); st.appendChild(c); });
+      st.hidden = !stats.length;
+      // One section at a time.
+      var sections = [];
+      if (d.workouts) sections.push(["Workouts", function () {
+        return list(d.workouts.slice().reverse().map(function (w) {
+          var li = line(w.name, w.minutes + " min · " + Math.round(w.volumeKg) + " kg", day(w.date));
+          (w.prs || []).forEach(function (p) { li.appendChild(el("span", "PR " + p, "pr")); });
+          if (w.exercises && w.exercises.length) {
+            var det = el("details"); det.appendChild(el("summary", w.exercises.length + (w.exercises.length === 1 ? " exercise" : " exercises") + " · " + w.sets + " sets"));
+            w.exercises.forEach(function (x) { det.appendChild(el("p", x.name + ": " + x.sets.join(", "))); });
+            li.appendChild(det);
+          }
+          return li;
+        }), "No workouts in this period.");
+      }]);
+      if (d.food) sections.push(["Food", function () {
+        var meals = {}; (d.foodDetails || []).forEach(function (x) { meals[x.date] = x.items; });
+        return list(d.food.slice().reverse().map(function (x) {
+          var li = line(day(x.date), Math.round(x.protein) + " g protein · " + Math.round(x.kcal) + " kcal");
+          var items = meals[x.date];
+          if (items && items.length) {
+            var det = el("details"); det.appendChild(el("summary", items.length + (items.length === 1 ? " item" : " items")));
+            items.forEach(function (i) { det.appendChild(el("p", i.meal + ": " + i.name + " (" + i.qty + " " + i.unit + ") · " + Math.round(i.protein) + " g")); });
+            li.appendChild(det);
+          }
+          return li;
+        }), "No food logged in this period.");
+      }]);
+      if (d.weight) sections.push(["Weight", function () {
+        return list(d.weight.slice().reverse().map(function (x) { return line(day(x.date), x.kg + " kg"); }), "No weigh-ins in this period.");
+      }]);
+      if (d.water) sections.push(["Water", function () {
+        return list(d.water.slice().reverse().map(function (x) { return line(day(x.date), (x.ml / 1000).toFixed(1) + " L"); }), "No water logged in this period.");
+      }]);
+      var tabs = document.getElementById("tabs"), buttons = [];
+      function show(i) {
+        buttons.forEach(function (b, j) { b.setAttribute("aria-selected", i === j ? "true" : "false"); });
+        out.textContent = ""; out.appendChild(sections[i][1]());
       }
-      if (d.foodDetails) {
-        var fd = card("Meals");
-        d.foodDetails.slice().reverse().forEach(function (x) {
-          fd.appendChild(el("h3", day(x.date)));
-          x.items.forEach(function (i) { fd.appendChild(el("p", i.meal + ": " + i.name + " (" + i.qty + " " + i.unit + ") · " + Math.round(i.protein) + " g protein", "muted")); });
-        });
-      }
-      if (d.weight) {
-        var wt = card("Weight");
-        if (!d.weight.length) wt.appendChild(el("p", "No weigh-ins in this period.", "muted"));
-        d.weight.slice().reverse().forEach(function (x) { row(wt, day(x.date), x.kg + " kg"); });
-      }
-      if (d.water) {
-        var wa = card("Water per day");
-        d.water.slice().reverse().forEach(function (x) { row(wa, day(x.date), (x.ml / 1000).toFixed(2) + " L"); });
-      }
+      sections.forEach(function (s, i) {
+        var b = el("button", s[0]); b.type = "button"; b.setAttribute("role", "tab");
+        b.onclick = function () { show(i); }; tabs.appendChild(b); buttons.push(b);
+      });
+      tabs.hidden = sections.length < 2;
+      if (sections.length) show(0);
     })
     .catch(function () { sub.textContent = "This link has been stopped or doesn't work any more. Ask for a new one."; });
 })();
 </script>
 
 </main>
-<footer class="site-footer"><p>Char Log is an independent app made in India. Nutrition estimates are estimates, not medical advice.</p>
-<nav class="footer-nav" aria-label="Footer"><a href="/privacy.html">Privacy policy</a><a href="/support.html">Support</a><a href="/delete-account.html">Delete your data</a><a href="/child-safety.html">Child safety</a></nav></footer>
+<footer class="site-footer"><nav class="footer-nav" aria-label="Footer"><a href="/privacy.html">Privacy policy</a></nav></footer>
 </div></body></html>
