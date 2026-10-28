@@ -261,6 +261,13 @@ h1 { max-width: 640px; margin-bottom: 26px; font: 800 clamp(2.3rem, 4.4vw, 3.5re
   var sub = document.getElementById("sub");
   function el(tag, text, cls) { var e = document.createElement(tag); if (text != null) e.textContent = text; if (cls) e.className = cls; return e; }
   function day(d) { var x = new Date(d + "T12:00:00"); return x.toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short" }); }
+  // "1 Nov – 31 Jan", with years only when it isn't all this year (FEEDBACK #172).
+  function period(d) {
+    if (!d.from || !d.to) return "Last " + d.weeks + " weeks";
+    var a = new Date(d.from + "T12:00:00"), b = new Date(d.to + "T12:00:00"), y = new Date().getFullYear();
+    var o = a.getFullYear() === y && b.getFullYear() === y ? { day: "numeric", month: "short" } : { day: "numeric", month: "short", year: "numeric" };
+    return a.toLocaleDateString("en-IN", o) + " – " + b.toLocaleDateString("en-IN", o);
+  }
   function ago(iso) { if (!iso) return ""; var m = Math.round((Date.now() - new Date(iso)) / 60000); if (m < 60) return m + " min ago"; var h = Math.round(m / 60); if (h < 48) return h + " h ago"; return Math.round(h / 24) + " days ago"; }
   function avg(xs, f) { return xs.length ? xs.reduce(function (n, x) { return n + f(x); }, 0) / xs.length : 0; }
   function line(left, right, date) {
@@ -279,7 +286,7 @@ h1 { max-width: 640px; margin-bottom: 26px; font: 800 clamp(2.3rem, 4.4vw, 3.5re
     .then(function (r) { if (r.status === 404) throw new Error("gone"); return r.json(); })
     .then(function (d) {
       document.getElementById("title").textContent = d.name + "'s log";
-      sub.textContent = "Last " + d.weeks + " weeks" + (d.updatedAt ? " · updated " + ago(d.updatedAt) : "");
+      sub.textContent = period(d) + (d.updatedAt ? " · updated " + ago(d.updatedAt) : "");
       if (d.empty) { out.appendChild(el("p", "Nothing logged yet.", "empty")); return; }
       // The numbers a trainer checks first.
       var stats = [];
