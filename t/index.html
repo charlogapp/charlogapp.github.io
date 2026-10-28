@@ -5,7 +5,7 @@
 <meta name="referrer" content="no-referrer">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>A training log shared with you</title>
+<title>A fitness portfolio shared with you</title>
 <meta name="theme-color" content="#f4f3ee">
 <link rel="icon" type="image/png" href="/icon.png">
 <link rel="preload" href="/fonts/Unbounded.woff2" as="font" type="font/woff2" crossorigin>
@@ -247,7 +247,7 @@ h1 { max-width: 640px; margin-bottom: 26px; font: 800 clamp(2.3rem, 4.4vw, 3.5re
 .tl .foot { margin-top: 36px; color: var(--muted); font-size: 13px; }
 </style>
 <div class="tl">
-<h1 id="title">Training log</h1>
+<h1 id="title">Fitness portfolio</h1>
 <p id="sub" class="sub">Loading…</p>
 <div id="stats" class="stats" hidden></div>
 <div id="tabs" class="tabs" role="tablist" hidden></div>
@@ -285,7 +285,7 @@ h1 { max-width: 640px; margin-bottom: 26px; font: 800 clamp(2.3rem, 4.4vw, 3.5re
                     body: JSON.stringify({ token: token }) })
     .then(function (r) { if (r.status === 404) throw new Error("gone"); return r.json(); })
     .then(function (d) {
-      document.getElementById("title").textContent = d.name + "'s log";
+      document.getElementById("title").textContent = d.name + "'s fitness portfolio";
       sub.textContent = period(d) + (d.updatedAt ? " · updated " + ago(d.updatedAt) : "");
       if (d.empty) { out.appendChild(el("p", "Nothing logged yet.", "empty")); return; }
       // The numbers a trainer checks first.
