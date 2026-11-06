@@ -256,6 +256,7 @@ h1 { max-width: 640px; margin-bottom: 26px; font: 800 clamp(2.3rem, 4.4vw, 3.5re
   function el(tag, text, cls) { var e = document.createElement(tag); if (text != null) e.textContent = text; if (cls) e.className = cls; return e; }
   function num(v) { var n = Number(v || 0); return n % 1 ? n.toFixed(1) : n.toLocaleString("en-IN"); }
   function clear() { while (root.firstChild) root.removeChild(root.firstChild); }
+  function shortLift(n) { return String(n).split(" - ")[0].split(" (")[0].replace(/^(Barbell|Dumbbell|Machine|Cable|Smith Machine|EZ Bar|Kettlebell)\s+/i, "").toLowerCase(); }
   function day(iso) { return new Date(iso + "T12:00:00").toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }); }
   if (!m) { clear(); root.appendChild(el("h1", "Page not found")); root.appendChild(el("p", "Check the link, or start at the home page.", "sub")); return; }
   var handle = m[1];
@@ -282,7 +283,7 @@ h1 { max-width: 640px; margin-bottom: 26px; font: 800 clamp(2.3rem, 4.4vw, 3.5re
         ci.appendChild(el("h1", (d.name || handle).toUpperCase()));
         ci.appendChild(el("p", "@" + d.username, "sub"));
         ci.appendChild(tiles(shown.slice(0, 3)));
-        if (w.best && w.best.length) ci.appendChild(tiles(w.best.slice(0, 3).map(function (b) { return [num(b.kg), String(b.name).split(" ")[0].toLowerCase() + " kg"]; })));
+        if (w.best && w.best.length) ci.appendChild(tiles(w.best.slice(0, 3).map(function (b) { return [num(b.kg), shortLift(b.name) + " kg"]; })));
         c.appendChild(ci); root.appendChild(c);
       } else if (d.look === "story") {
         root.appendChild(el("h1", d.name || handle));
